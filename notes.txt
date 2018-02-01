@@ -1,0 +1,5 @@
+1. Mine a finite number of tokens and make mining tokens after that extremely difficult so no further tokens can be fined
+2. Issue a token to each voter who has registered to vote
+3. They send a token to the wallet of the candidate they are voting for 
+
+Each voter is issued one token, and the token is then deposited in the candidates wallet once they have cast their vote.
