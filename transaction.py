@@ -1,12 +1,12 @@
 class Transaction(object):
-    def __init__(self, sender, receiver, value):
+    def __init__(self, sender, recipient, amount):
         self.sender = sender
-        self.receiver = receiver
-        self.value = value
+        self.recipient = recipient
+        self.amount = amount
 
     def to_json(self):
         return {
             "sender" : self.sender,
-            "receiver" : self.receiver,
-            "value" : self.value
+            "recipient" : self.recipient,
+            "amount" : self.amount
         }
