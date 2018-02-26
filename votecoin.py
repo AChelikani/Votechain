@@ -30,7 +30,7 @@ def mine():
     previous_hash = blockchain.hash(last_block)
     block = blockchain.add_block(proof, previous_hash)
 
-    return jsonify(block.toJson()), 200
+    return jsonify(block.to_json()), 200
 
 
 @app.route('/transactions/new', methods=['POST'])
@@ -38,7 +38,7 @@ def add_transaction():
     values = request.get_json()
 
     # Create a new Transaction
-    index = blockchain.add_transaction(Transaction(values['sender'], values['recipient'], values['amount']))
+    index = blockchain.add_transaction(Transaction(values['sender'], values['receiver'], values['amount']))
 
     response = {'message': 'Transaction will be added to Block ' + str(index)}
     return jsonify(response), 201
@@ -55,25 +55,6 @@ def chain():
         'length': len(blockchain_chain),
     }
     return jsonify(response), 200
-
-
-@app.route('/nodes/register', methods=['POST'])
-def register_nodes():
-    values = request.get_json()
-
-    nodes = values.get('nodes')
-    if nodes is None:
-        return "Error: Please supply a valid list of nodes", 400
-
-    for node in nodes:
-        blockchain.register_node(node)
-
-    response = {
-        'message': 'New nodes have been added',
-        'total_nodes': list(blockchain.nodes),
-    }
-    return jsonify(response), 201
-
 
 @app.route('/nodes/resolve', methods=['GET'])
 def consensus_protocol():

@@ -89,8 +89,8 @@ class Blockchain:
         self.chain.append(block)
         return block
 
-    def add_transaction(self, sender, recipient, amount):
-        transaction = Transaction(sender, recipient, amount)
+    def add_transaction(self, sender, receiver, amount):
+        transaction = Transaction(sender, receiver, amount)
 
         self.current_transactions.append(transaction)
 
