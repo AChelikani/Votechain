@@ -14,6 +14,7 @@ app = Flask(__name__)
 
 node_identifier = str(uuid4()).replace('-', '')
 
+# Initialize blockchain with 100 voters (100 coins)
 blockchain = Blockchain(100)
 
 

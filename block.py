@@ -1,5 +1,4 @@
 import time
-import copy
 
 class Block(object):
     def __init__(self, index, transactions, proof_of_work, previous_block_hash):

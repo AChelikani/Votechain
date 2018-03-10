@@ -37,14 +37,9 @@ class Blockchain:
 
         while current_index < len(chain):
             block = chain[current_index]
-            print(last_block)
-            print(block)
-            print("\n-----------\n")
-            # Check that the hash of the block is correct
             if block['previous_hash'] != self.hash(last_block):
                 return False
 
-            # Check that the Proof of Work is correct
             if not self.valid_proof(last_block['proof'], block['proof'], last_block['previous_hash']):
                 return False
 
@@ -54,13 +49,12 @@ class Blockchain:
         return True
 
     def resolve_conflicts(self):
+        # This is in case of a conflict chain copy mined by a rogue party
         neighbours = self.nodes
         new_chain = None
 
-        # We're only looking for chains longer than ours
         max_length = len(self.chain)
 
-        # Grab and verify the chains from all the nodes in our network
         for node in neighbours:
             response = requests.get('http://' + node + '/chain')
 
@@ -68,12 +62,10 @@ class Blockchain:
                 length = response.json()['length']
                 chain = response.json()['chain']
 
-                # Check if the length is longer and the chain is valid
                 if length > max_length and self.valid_chain(chain):
                     max_length = length
                     new_chain = chain
 
-        # Replace our chain if we discovered a new, valid chain longer than ours
         if new_chain:
             self.chain = new_chain
             return True
@@ -103,7 +95,6 @@ class Blockchain:
     @staticmethod
     def hash(block):
 
-        # We must make sure that the Dictionary is Ordered, or we'll have inconsistent hashes
         block_string = json.dumps(block.to_json(), sort_keys=True).encode()
         return hashlib.sha256(block_string).hexdigest()
 
