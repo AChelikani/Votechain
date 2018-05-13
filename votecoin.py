@@ -7,6 +7,7 @@ from uuid import uuid4
 from block import Block
 from transaction import Transaction
 import random
+from wallet import Wallet
 
 import requests
 from flask import Flask, jsonify, request
@@ -78,16 +79,25 @@ def consensus_protocol():
 @app.route('/vote', methods=['GET'])
 def vote():
     # Setup wallets for both of the candidates
-    
+    candidate1 = Wallet("Candidate 1")
+    candidate2 = Wallet("Candidate 2")
+
     # Two candidates, each coin randomly votes for a candidate
     num_coins = len(blockchain.chain)
     votes = []
     for x in range(num_coins):
-        votes.append(random.randint(0,1))
+        votes.append(random.randint(1,2))
     result = "<h1> Votes </h1>"
     for x in range(len(votes)):
         result += "<p> voter " + str(x+1) + " voted for candidate " + str(votes[x]) + " </p>"
-        #transaction = Transaction(sender, receiver, 1)
+        if votes[x] == 1:
+            candidate1.add_money(1)
+        elif votes[x] == 2:
+            candidate2.add_money(2)
+    result += "<br>"
+    result += "Candidate 1 total votes: " + str(candidate1.get_total())
+    result += "Candidate 2 total votes: " + str(candidate2.get_total())
+    #transaction = Transaction(sender, receiver, 1)
     return result
 
 
