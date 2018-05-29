@@ -82,6 +82,10 @@ def vote():
     candidate1 = Wallet("Candidate 1")
     candidate2 = Wallet("Candidate 2")
 
+    # Mine as many coins as desiredf
+    for x in range(10):
+        mine()
+
     # Two candidates, each coin randomly votes for a candidate
     num_coins = len(blockchain.chain)
     votes = []
